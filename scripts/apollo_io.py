@@ -60,7 +60,14 @@ def apollo_request(method, path, payload=None, params=None):
         "x-api-key": api_key(),
         "Content-Type": "application/json",
         "Accept": "application/json",
+        "Accept-Language": "en-US,en;q=0.9",
         "Cache-Control": "no-cache",
+        # Apollo.io sits behind Cloudflare which blocks Python's default user-agent.
+        "User-Agent": (
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/120.0.0.0 Safari/537.36"
+        ),
     }
     req = urllib.request.Request(url, data=data, method=method, headers=headers)
     try:
